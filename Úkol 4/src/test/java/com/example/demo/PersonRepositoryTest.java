@@ -1,7 +1,6 @@
 package com.example.demo;
 
-
-import com.example.demo.entity.*;
+import com.example.demo.entity.Person;
 import com.example.demo.repository.*;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -18,34 +17,38 @@ import static org.hamcrest.Matchers.hasSize;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-//@SpringBootTest
-class ProductRepositoryTest {
+public class PersonRepositoryTest {
 
     @Autowired
-    private ProductRepository productRepository;
+    private PersonRepository personRepository;
 
     @Test
-    public void saveProductTest() {
-        Product product = new Product();
-        product.setName("Auto");
-        productRepository.save(product);
+    public void savePersonTest() {
+        Person person = new Person();
+        person.setFirstName("Pepa");
+        person.setLastName("Novak");
+        person.setAge((byte)5);
 
-        List<Product> all = productRepository.findAll();
+        personRepository.save(person);
+
+        List<Person> all = personRepository.findAll();
         assertThat(all, hasSize(1));
     }
 
     @Test
-    public void deleteProductTest() {
-        Product product = new Product();
-        product.setName("Auto");
-        productRepository.save(product);
+    public void deletePersonTest() {
+        Person person = new Person();
+        person.setFirstName("Pepa");
+        person.setLastName("Novak");
+        person.setAge((byte)5);
+        personRepository.save(person);
 
-        List<Product> all = productRepository.findAll();
+        List<Person> all = personRepository.findAll();
         assertThat(all, hasSize(1));
 
-        productRepository.delete(product);
+        personRepository.delete(person);
 
-        all = productRepository.findAll();
+        all = personRepository.findAll();
         assertThat(all, hasSize(0));
     }
 }
