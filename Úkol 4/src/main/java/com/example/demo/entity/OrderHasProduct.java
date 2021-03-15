@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity(name = "order_has_product")
 public class OrderHasProduct {
@@ -47,5 +48,18 @@ public class OrderHasProduct {
 
     public void setAmount(Integer amount) {
         this.amount = amount;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OrderHasProduct that = (OrderHasProduct) o;
+        return Objects.equals(id, that.id) && Objects.equals(amount, that.amount);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, amount);
     }
 }

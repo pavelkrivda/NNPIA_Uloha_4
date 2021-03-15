@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity (name = "order_form")
@@ -42,5 +43,18 @@ public class Order {
 
     public void setOrderHasProducts(Set<OrderHasProduct> orderHasProducts) {
         this.orderHasProducts = orderHasProducts;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Order order = (Order) o;
+        return Objects.equals(id, order.id) && Objects.equals(person, order.person) && state == order.state;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, person, state);
     }
 }
