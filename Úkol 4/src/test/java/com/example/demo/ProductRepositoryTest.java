@@ -1,8 +1,10 @@
 package com.example.demo;
 
 
-import com.example.demo.entity.*;
-import com.example.demo.repository.*;
+import com.example.demo.entity.Product;
+import com.example.demo.repository.ProductRepository;
+import org.assertj.core.api.Assertions;
+import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,5 +49,33 @@ class ProductRepositoryTest {
 
         all = productRepository.findAll();
         assertThat(all, hasSize(0));
+    }
+
+    @Test
+    public void findProductByNameContainsTest() {
+        Product product = new Product();
+        product.setName("Auto");
+        productRepository.save(product);
+
+        Product findProduct = productRepository.findProductByNameContains("Auto");
+        Assert.assertNotNull(findProduct);
+    }
+
+    @Test
+    public void findProductByIdBetweenTest() {
+        Product productsOne = new Product();
+        Product productsTwo = new Product();
+        Product productsThree = new Product();
+
+        productsOne.setName("Product one");
+        productsTwo.setName("Product two");
+        productsThree.setName("Product three");
+
+        productRepository.save(productsOne);
+        productRepository.save(productsTwo);
+        productRepository.save(productsThree);
+
+        List<Product> findProduct = productRepository.findProductByIdBetween(0L,1L);
+        Assertions.assertThat(findProduct.size()).isEqualTo(2);
     }
 }
